@@ -4,7 +4,7 @@
 """
 AMMAR SIM DATABASE - Professional Phone Number Lookup Tool
 Created by: AMMAR
-Version: 3.0 PREMIUM (AUTO-ADJUSTABLE)
+Version: 2.0 PREMIUM (BORDERLESS DESIGN)
 """
 
 import os
@@ -44,247 +44,108 @@ C = Colors()
 # ============================================
 CONFIG = {
     "owner": "AMMAR",
-    "version": "3.0 PREMIUM",
+    "version": "2.0 PREMIUM",
     "whatsapp": "03018787786",
     "group_link": "https://chat.whatsapp.com/F2zlsDXzwp05KKIrqj8vVj",
     "api_base": "https://howler-database-api.vercel.app/api/lookup?phone="
 }
 
 # ============================================
-# TERMINAL SIZE DETECTION
+# UTILITY FUNCTIONS
 # ============================================
-def get_terminal_size():
-    """Get terminal width and height"""
-    try:
-        columns, rows = os.get_terminal_size()
-        return columns, rows
-    except:
-        return 80, 24  # Default size
-
-def center_text(text, width=None):
-    """Center text according to terminal width"""
-    if width is None:
-        width, _ = get_terminal_size()
-    return text.center(width)
-
-def create_border_line(char="─", width=None):
-    """Create border line with exact width"""
-    if width is None:
-        width, _ = get_terminal_size()
-    return char * (width - 4)  # -4 for the corners
+def clear_screen():
+    os.system('clear' if os.name == 'posix' else 'cls')
 
 # ============================================
-# AUTO-ADJUSTABLE BOX FUNCTIONS
-# ============================================
-def print_top_border(color=C.NEON_BLUE):
-    """Print top border with auto width"""
-    width, _ = get_terminal_size()
-    print(f"{color}    ╔{create_border_line('═', width-4)}╗{C.RESET}")
-
-def print_mid_border(color=C.NEON_BLUE):
-    """Print middle border with auto width"""
-    width, _ = get_terminal_size()
-    print(f"{color}    ╠{create_border_line('═', width-4)}╣{C.RESET}")
-
-def print_bottom_border(color=C.NEON_BLUE):
-    """Print bottom border with auto width"""
-    width, _ = get_terminal_size()
-    print(f"{color}    ╚{create_border_line('═', width-4)}╝{C.RESET}")
-
-def print_line(text, color=C.WHITE, border_color=C.NEON_BLUE):
-    """Print a line inside box with auto padding"""
-    width, _ = get_terminal_size()
-    content_width = width - 8  # -8 for borders and padding
-    text = str(text)[:content_width]
-    padding = content_width - len(text)
-    print(f"{border_color}    ║{C.RESET} {color}{text}{' ' * padding}{border_color}║{C.RESET}")
-
-def print_centered_line(text, color=C.WHITE, border_color=C.NEON_BLUE):
-    """Print centered text inside box"""
-    width, _ = get_terminal_size()
-    content_width = width - 8
-    centered = text.center(content_width)
-    print(f"{border_color}    ║{C.RESET} {color}{centered}{border_color}║{C.RESET}")
-
-# ============================================
-# BANNER WITH AUTO-ADJUST
+# BORDERLESS BANNER - صرف ٹیکسٹ
 # ============================================
 def show_banner():
-    """Display banner with auto-adjustable design"""
     clear_screen()
-    width, _ = get_terminal_size()
     
-    # Top Border
-    print_top_border(C.NEON_RED)
+    print(f"{C.NEON_YELLOW}")
+    print("        █████╗ ███╗   ███╗███╗   ███╗ █████╗ ██████╗")
+    print("       ██╔══██╗████╗ ████║████╗ ████║██╔══██╗██╔══██╗")
+    print("       ███████║██╔████╔██║██╔████╔██║███████║██████╔╝")
+    print("       ██╔══██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██╔══██╗")
+    print("       ██║  ██║██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║  ██║")
+    print("       ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝")
+    print(f"{C.RESET}")
     
-    # AMMAR ASCII Art (Fixed width version)
-    ascii_lines = [
-        "██████╗ ███╗   ███╗███╗   ███╗ █████╗ ██████╗",
-        "██╔══██╗████╗ ████║████╗ ████║██╔══██╗██╔══██╗",
-        "███████║██╔████╔██║██╔████╔██║███████║██████╔╝",
-        "██╔══██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██╔══██╗",
-        "██║  ██║██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║  ██║",
-        "╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝"
-    ]
-    
-    for line in ascii_lines:
-        print_centered_line(line, C.NEON_YELLOW, C.NEON_RED)
-    
-    print_mid_border(C.NEON_RED)
-    print_centered_line("SIM DATABASE PREMIUM EDITION v3.0", C.NEON_GREEN, C.NEON_RED)
-    print_bottom_border(C.NEON_RED)
-    
-    # Info Box
-    print_top_border(C.NEON_BLUE)
-    print_centered_line("", C.WHITE, C.NEON_BLUE)
-    print_line(f"OWNER    : AMMAR", C.NEON_PINK, C.NEON_BLUE)
-    print_line(f"WHATSAPP : 03018787786", C.NEON_PINK, C.NEON_BLUE)
-    print_line(f"GROUP    : AMMAR PRIVATE", C.NEON_PINK, C.NEON_BLUE)
-    print_line(f"MODE     : PREMIUM", C.NEON_GREEN, C.NEON_BLUE)
-    print_line(f"API      : ONLINE", C.NEON_GREEN, C.NEON_BLUE)
-    print_centered_line("", C.WHITE, C.NEON_BLUE)
-    print_bottom_border(C.NEON_BLUE)
+    print(f"{C.NEON_GREEN}              SIM DATABASE PREMIUM EDITION v2.0              {C.RESET}")
+    print("")
+    print(f"{C.NEON_PINK}    OWNER    : {C.NEON_YELLOW}AMMAR{C.RESET}")
+    print(f"{C.NEON_PINK}    WHATSAPP : {C.NEON_YELLOW}03018787786{C.RESET}")
+    print(f"{C.NEON_PINK}    GROUP    : {C.NEON_YELLOW}AMMAR PRIVATE{C.RESET}")
+    print(f"{C.NEON_PINK}    MODE     : {C.NEON_GREEN}PREMIUM{C.RESET}")
+    print(f"{C.NEON_PINK}    API      : {C.NEON_GREEN}ONLINE{C.RESET}")
+    print("")
 
 # ============================================
-# MENU WITH AUTO-ADJUST
+# BORDERLESS MENU
 # ============================================
 def show_menu():
-    """Display main menu with auto-adjustable design"""
-    width, _ = get_terminal_size()
-    
-    print_top_border(C.NEON_BLUE)
-    print_centered_line("🔥 MAIN MENU OPTIONS 🔥", C.NEON_GREEN, C.NEON_BLUE)
-    print_mid_border(C.NEON_BLUE)
-    print_centered_line("", C.WHITE, C.NEON_BLUE)
-    print_line("[01] 🔍 SEARCH DATABASE     [MAPS]", C.NEON_CYAN, C.NEON_BLUE)
-    print_line("[02] 📞 CONTACT NUMBER      [SAVED]", C.NEON_CYAN, C.NEON_BLUE)
-    print_line("[03] 👥 WHATSAPP GROUP      [OPEN]", C.NEON_CYAN, C.NEON_BLUE)
-    print_line("[04] ℹ️ NUMBER INFORMATION  [SEARCH]", C.NEON_CYAN, C.NEON_BLUE)
-    print_line("[00] ❌ EXIT SYSTEM         [QUIT]", C.NEON_RED, C.NEON_BLUE)
-    print_centered_line("", C.WHITE, C.NEON_BLUE)
-    print_bottom_border(C.NEON_BLUE)
+    print(f"{C.NEON_BLUE}                      MAIN MENU OPTIONS                      {C.RESET}")
+    print("")
+    print(f"          {C.NEON_YELLOW}[01]{C.NEON_CYAN} 🔍 SEARCH DATABASE          {C.NEON_PINK}[MAPS]{C.RESET}")
+    print(f"          {C.NEON_YELLOW}[02]{C.NEON_CYAN} 📱 CONTACT & SUPPORT        {C.NEON_PINK}[GROUP]{C.RESET}")
+    print(f"          {C.NEON_YELLOW}[00]{C.NEON_RED} ❌ EXIT SYSTEM               {C.NEON_PINK}[QUIT]{C.RESET}")
+    print("")
 
 # ============================================
-# SEARCH HEADER WITH AUTO-ADJUST
+# BORDERLESS SEARCH HEADER
 # ============================================
 def show_search_header(phone):
-    """Display search header with auto-adjustable design"""
-    print_top_border(C.NEON_CYAN)
-    print_centered_line("INITIALIZING DATABASE SCAN", C.WHITE, C.NEON_CYAN)
-    print_mid_border(C.NEON_CYAN)
-    print_line(f"TARGET   : {phone}", C.NEON_GREEN, C.NEON_CYAN)
-    print_line(f"SECURITY : BYPASSING FIREWALL...", C.NEON_YELLOW, C.NEON_CYAN)
-    print_bottom_border(C.NEON_CYAN)
+    print(f"{C.NEON_CYAN}                    INITIALIZING DATABASE SCAN                    {C.RESET}")
+    print("")
+    print(f"{C.NEON_GREEN}    TARGET   : {C.WHITE}{phone}{C.RESET}")
+    print(f"{C.NEON_GREEN}    SECURITY : {C.NEON_YELLOW}BYPASSING FIREWALL...{C.RESET}")
+    print("")
 
 # ============================================
-# RESULTS TABLE WITH AUTO-ADJUST
+# BORDERLESS RESULTS TABLE
 # ============================================
 def display_results_table(results):
-    """Display results with auto-adjustable design"""
     if not results:
-        print_top_border(C.NEON_RED)
-        print_centered_line("❌ NO DATA FOUND!", C.WHITE, C.NEON_RED)
-        print_bottom_border(C.NEON_RED)
+        print(f"{C.NEON_RED}                      ❌ NO DATA FOUND!                      {C.RESET}")
+        print("")
         return
     
-    print_top_border(C.NEON_GREEN)
-    print_centered_line("📊 DATABASE RECORDS", C.NEON_YELLOW, C.NEON_GREEN)
-    print_mid_border(C.NEON_GREEN)
+    print(f"{C.NEON_GREEN}                      📊 DATABASE RECORDS                      {C.RESET}")
+    print("")
     
-    for i, item in enumerate(results[:8]):  # Show first 8 results
+    for i, item in enumerate(results[:10]):
         key = item['key'].upper()
         value = item['value']
         
-        if len(value) > 40:
-            value = value[:37] + "..."
+        if len(value) > 50:
+            value = value[:47] + "..."
         
-        print_line(f"{key}: {value}", C.WHITE, C.NEON_GREEN)
+        print(f"  {C.NEON_CYAN}► {C.NEON_YELLOW}{key:<15}{C.NEON_PINK}: {C.WHITE}{value}{C.RESET}")
     
-    print_bottom_border(C.NEON_GREEN)
+    print("")
 
 # ============================================
-# ADDRESS BOX WITH AUTO-ADJUST
+# BORDERLESS ADDRESS BOX
 # ============================================
 def show_address_box(address):
-    """Display address with auto-adjustable design"""
-    print_top_border(C.NEON_GREEN)
-    print_centered_line("📍 ADDRESS DETECTED", C.NEON_YELLOW, C.NEON_GREEN)
-    print_mid_border(C.NEON_GREEN)
-    
-    # Split long address into multiple lines
-    words = address.split()
-    line = ""
-    for word in words:
-        if len(line + word) < 50:
-            line += word + " "
-        else:
-            print_line(line.strip(), C.WHITE, C.NEON_GREEN)
-            line = word + " "
-    if line:
-        print_line(line.strip(), C.WHITE, C.NEON_GREEN)
-    
-    print_bottom_border(C.NEON_GREEN)
+    print(f"{C.NEON_GREEN}                         ADDRESS DETECTED                         {C.RESET}")
+    print("")
+    print(f"{C.WHITE}  {address}{C.RESET}")
+    print("")
 
 # ============================================
-# ERROR BOX WITH AUTO-ADJUST
+# BORDERLESS ERROR BOX
 # ============================================
 def show_error_box(error):
-    """Display error with auto-adjustable design"""
-    print_top_border(C.NEON_RED)
-    print_centered_line("❌ ERROR", C.WHITE, C.NEON_RED)
-    print_mid_border(C.NEON_RED)
-    print_line(str(error)[:60], C.NEON_YELLOW, C.NEON_RED)
-    print_bottom_border(C.NEON_RED)
-
-# ============================================
-# CONTACT NUMBER INFO
-# ============================================
-def show_contact_number():
-    """Display contact number information"""
-    show_banner()
-    
-    print_top_border(C.NEON_CYAN)
-    print_centered_line("📞 CONTACT NUMBER INFO", C.NEON_PINK, C.NEON_CYAN)
-    print_mid_border(C.NEON_CYAN)
-    print_line("", C.WHITE, C.NEON_CYAN)
-    print_line("OWNER NUMBER    : 03018787786", C.NEON_GREEN, C.NEON_CYAN)
-    print_line("OWNER NAME      : AMMAR", C.NEON_GREEN, C.NEON_CYAN)
-    print_line("NETWORK         : PAKISTAN", C.NEON_GREEN, C.NEON_CYAN)
-    print_line("TYPE            : MOBILE", C.NEON_GREEN, C.NEON_CYAN)
-    print_line("STATUS          : ACTIVE", C.NEON_GREEN, C.NEON_CYAN)
-    print_line("", C.WHITE, C.NEON_CYAN)
-    print_bottom_border(C.NEON_CYAN)
-    
-    input(f"\n{C.NEON_YELLOW}    Press ENTER to continue...{C.RESET}")
-
-# ============================================
-# WHATSAPP GROUP INFO
-# ============================================
-def show_whatsapp_group():
-    """Display WhatsApp group information"""
-    show_banner()
-    
-    print_top_border(C.NEON_CYAN)
-    print_centered_line("👥 WHATSAPP GROUP INFO", C.NEON_PINK, C.NEON_CYAN)
-    print_mid_border(C.NEON_CYAN)
-    print_line("", C.WHITE, C.NEON_CYAN)
-    print_line("GROUP NAME      : AMMAR PRIVATE", C.NEON_GREEN, C.NEON_CYAN)
-    print_line("GROUP TYPE      : WHATSAPP GROUP", C.NEON_GREEN, C.NEON_CYAN)
-    print_line("CREATED BY      : AMMAR", C.NEON_GREEN, C.NEON_CYAN)
-    print_line("MEMBERS         : PRIVATE", C.NEON_GREEN, C.NEON_CYAN)
-    print_line("", C.WHITE, C.NEON_CYAN)
-    print_bottom_border(C.NEON_CYAN)
-    
-    print(f"\n{C.NEON_YELLOW}    Open group link in browser?{C.RESET}")
-    choice = input(f"{C.NEON_CYAN}    [1] OPEN GROUP  [0] BACK: {C.WHITE}")
-    if choice == '1':
-        os.system(f"termux-open-url '{CONFIG['group_link']}'")
+    print(f"{C.NEON_RED}                            ERROR                                    {C.RESET}")
+    print("")
+    print(f"{C.NEON_YELLOW}  {error}{C.RESET}")
+    print("")
 
 # ============================================
 # DATA EXTRACTION FUNCTIONS
 # ============================================
 def extract_all_data(data):
-    """Extract all data from API response"""
     results = []
     
     if isinstance(data, dict):
@@ -311,7 +172,6 @@ def extract_all_data(data):
     return results
 
 def find_address(data):
-    """Find address in data"""
     if isinstance(data, dict):
         for key, value in data.items():
             if 'address' in str(key).lower():
@@ -332,15 +192,13 @@ def find_address(data):
 # MAP FUNCTION
 # ============================================
 def open_map(address):
-    """Open address in Google Maps"""
     if address and len(address) > 5:
         clean_addr = address.replace('null', '').replace('no', '').replace('none', '').strip()
         if clean_addr and len(clean_addr) > 3:
             search_url = f"https://www.google.com/maps/search/{clean_addr.replace(' ', '+')}"
             
-            print_top_border(C.NEON_GREEN)
-            print_centered_line("📍 LOCATION FOUND! OPENING MAPS...", C.NEON_YELLOW, C.NEON_GREEN)
-            print_bottom_border(C.NEON_GREEN)
+            print(f"{C.NEON_GREEN}                📍 LOCATION FOUND! OPENING MAPS...                {C.RESET}")
+            print("")
             
             os.system(f"termux-open-url '{search_url}'")
             return True
@@ -350,18 +208,15 @@ def open_map(address):
 # SEARCH FUNCTION
 # ============================================
 def search_database(phone):
-    """Search phone number in database"""
     show_banner()
     show_search_header(phone)
     
     # Format phone number
-    original_phone = phone
     if phone.startswith('0'):
         phone = '+92' + phone[1:]
     elif not phone.startswith('+'):
         phone = '+92' + phone
     
-    # Loading animation
     print(f"{C.NEON_CYAN}    CONNECTING TO DATABASE...{C.RESET}")
     time.sleep(1.5)
     
@@ -376,10 +231,8 @@ def search_database(phone):
         
         data = response.json()
         
-        print_top_border(C.NEON_GREEN)
-        print_centered_line("✅ DATABASE ACCESS GRANTED", C.WHITE, C.NEON_GREEN)
-        print_bottom_border(C.NEON_GREEN)
-        
+        print(f"{C.NEON_GREEN}                    DATABASE ACCESS GRANTED                    {C.RESET}")
+        print("")
         time.sleep(1)
         
         if data and data != {}:
@@ -395,9 +248,8 @@ def search_database(phone):
                 if choice in ['y', 'yes']:
                     open_map(address)
         else:
-            print_top_border(C.NEON_RED)
-            print_centered_line("❌ NO RECORDS FOUND!", C.WHITE, C.NEON_RED)
-            print_bottom_border(C.NEON_RED)
+            print(f"{C.NEON_RED}                      NO RECORDS FOUND!                      {C.RESET}")
+            print("")
         
     except Exception as e:
         show_error_box(str(e))
@@ -405,56 +257,62 @@ def search_database(phone):
     input(f"\n{C.NEON_YELLOW}    Press ENTER to return to main menu...{C.RESET}")
 
 # ============================================
+# ABOUT SECTION
+# ============================================
+def show_about():
+    show_banner()
+    
+    print(f"{C.NEON_CYAN}                   CONTACT & SUPPORT INFO                   {C.RESET}")
+    print("")
+    print(f"{C.NEON_GREEN}    OWNER     : {C.WHITE}AMMAR{C.RESET}")
+    print(f"{C.NEON_GREEN}    WHATSAPP  : {C.WHITE}03018787786{C.RESET}")
+    print("")
+    print(f"{C.NEON_YELLOW}    GROUP     : {C.WHITE}AMMAR PRIVATE{C.RESET}")
+    print(f"{C.NEON_YELLOW}    LINK      : {C.WHITE}{CONFIG['group_link']}{C.RESET}")
+    print("")
+    print(f"{C.NEON_MAGENTA}    VERSION   : {CONFIG['version']}{C.RESET}")
+    print("")
+    
+    choice = input(f"{C.NEON_CYAN}    [1] OPEN GROUP  [0] BACK: {C.WHITE}")
+    if choice == '1':
+        os.system(f"termux-open-url '{CONFIG['group_link']}'")
+
+# ============================================
 # MAIN MENU
 # ============================================
 def main():
-    """Main program loop"""
     try:
         while True:
             show_banner()
             show_menu()
             
-            print(f"\n{C.NEON_CYAN}    ╭{'─' * 50}╮")
-            choice = input(f"    {C.NEON_GREEN}⚡ AMMAR@{C.NEON_YELLOW}TERMUX{C.NEON_BLUE} ~${C.WHITE} ").strip()
-            print(f"    {C.NEON_CYAN}╰{'─' * 50}╯{C.RESET}")
+            choice = input(f"{C.NEON_GREEN}⚡ AMMAR@{C.NEON_YELLOW}TERMUX{C.NEON_BLUE} ~${C.WHITE} ").strip()
+            print("")
             
             if choice in ['01', '1']:
-                phone = input(f"\n{C.NEON_YELLOW}    📞 Enter Pakistani number: {C.WHITE}").strip()
+                phone = input(f"{C.NEON_YELLOW}    📞 Enter Pakistani number: {C.WHITE}").strip()
                 if phone and phone.replace('+', '').replace('-', '').replace(' ', '').isdigit():
                     search_database(phone)
                 else:
-                    print(f"\n{C.NEON_RED}    ❌ Invalid number format!{C.RESET}")
+                    print(f"{C.NEON_RED}    ❌ Invalid number format!{C.RESET}")
                     time.sleep(2)
             
             elif choice in ['02', '2']:
-                show_contact_number()
-            
-            elif choice in ['03', '3']:
-                show_whatsapp_group()
-            
-            elif choice in ['04', '4']:
-                phone = input(f"\n{C.NEON_YELLOW}    📞 Enter number to search: {C.WHITE}").strip()
-                if phone and phone.replace('+', '').replace('-', '').replace(' ', '').isdigit():
-                    search_database(phone)
-                else:
-                    print(f"\n{C.NEON_RED}    ❌ Invalid number format!{C.RESET}")
-                    time.sleep(2)
+                show_about()
             
             elif choice in ['00', '0']:
-                print_top_border(C.NEON_RED)
-                print_centered_line("THANK YOU FOR USING AMMAR SIM", C.WHITE, C.NEON_RED)
-                print_centered_line("🔥 AMMAR PREMIUM EDITION 🔥", C.NEON_YELLOW, C.NEON_RED)
-                print_bottom_border(C.NEON_RED)
+                print(f"{C.NEON_RED}              THANK YOU FOR USING AMMAR SIM              {C.RESET}")
+                print(f"{C.NEON_YELLOW}                  🔥 AMMAR PREMIUM EDITION 🔥            {C.RESET}")
                 time.sleep(2)
                 clear_screen()
                 sys.exit(0)
             
             else:
-                print(f"\n{C.NEON_RED}    ❌ Invalid option!{C.RESET}")
+                print(f"{C.NEON_RED}    ❌ Invalid option!{C.RESET}")
                 time.sleep(2)
     
     except KeyboardInterrupt:
-        print(f"\n\n{C.NEON_RED}    ⚡ INTERRUPTED BY USER{C.RESET}")
+        print(f"\n{C.NEON_RED}    ⚡ INTERRUPTED BY USER{C.RESET}")
         time.sleep(1)
         clear_screen()
         sys.exit(0)
