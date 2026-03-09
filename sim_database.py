@@ -4,7 +4,7 @@
 """
 AMMAR SIM DATABASE - Professional Phone Number Lookup Tool
 Created by: AMMAR
-Version: 2.0 (Premium Edition)
+Version: 2.0 PREMIUM (FIXED EDITION)
 """
 
 import os
@@ -15,7 +15,7 @@ import requests
 from datetime import datetime
 
 # ============================================
-# PREMIUM COLOR CODES - NEON & METALLIC THEME
+# PREMIUM COLOR CODES
 # ============================================
 class Colors:
     # Regular Colors
@@ -36,37 +36,9 @@ class Colors:
     NEON_PINK = '\033[95m'
     NEON_CYAN = '\033[96m'
     
-    # Background Colors
-    BG_BLACK = '\033[40m'
-    BG_RED = '\033[41m'
-    BG_GREEN = '\033[42m'
-    BG_YELLOW = '\033[43m'
-    BG_BLUE = '\033[44m'
-    BG_MAGENTA = '\033[45m'
-    BG_CYAN = '\033[46m'
-    BG_WHITE = '\033[47m'
-    
-    # Text Styles
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    BLINK = '\033[5m'
-    REVERSE = '\033[7m'
-    DIM = '\033[2m'
-    
     # Reset
     RESET = '\033[0m'
-    
-    # Box Drawing Characters
-    BOX_TL = '┌'
-    BOX_TR = '┐'
-    BOX_BL = '└'
-    BOX_BR = '┘'
-    BOX_H = '─'
-    BOX_V = '│'
-    BOX_T = '┬'
-    BOX_B = '┴'
-    BOX_L = '├'
-    BOX_R = '┤'
+    BOLD = '\033[1m'
 
 C = Colors()
 
@@ -77,7 +49,7 @@ CONFIG = {
     "owner": "AMMAR",
     "version": "2.0 PREMIUM",
     "whatsapp": "03018787786",
-    "group_link": "https://chat.whatsapp.com/F2zlsDXzwp05KKIrqj8vVj?mode=gi_t",
+    "group_link": "https://chat.whatsapp.com/F2zlsDXzwp05KKIrqj8vVj",
     "api_base": "https://howler-database-api.vercel.app/api/lookup?phone="
 }
 
@@ -88,36 +60,23 @@ def clear_screen():
     """Clear terminal screen"""
     os.system('clear' if os.name == 'posix' else 'cls')
 
-def loading_animation(text="PROCESSING", duration=1.5):
+def loading_animation(text="PROCESSING"):
     """Display loading animation"""
     chars = "⣾⣽⣻⢿⡿⣟⣯⣷"
-    for _ in range(int(duration * 10)):
+    for i in range(20):
         for char in chars:
-            sys.stdout.write(f'\r{C.NEON_CYAN}{text} {char}{C.RESET}')
+            sys.stdout.write(f'\r{C.NEON_CYAN}┃ {text} {char} ┃{C.RESET}')
             sys.stdout.flush()
-            time.sleep(0.05)
+            time.sleep(0.03)
     print()
-
-def type_effect(text, color=C.NEON_GREEN, delay=0.03):
-    """Typewriter effect for text"""
-    for char in text:
-        sys.stdout.write(f'{color}{char}{C.RESET}')
-        sys.stdout.flush()
-        time.sleep(delay)
-    print()
-
-def center_text(text, width=60):
-    """Center text within given width"""
-    return text.center(width)
 
 # ============================================
-# PREMIUM BANNER DESIGN - AMMAR EDITION
+# PREMIUM BANNER - AMMAR EDITION
 # ============================================
 def show_banner():
-    """Display premium animated banner with AMMAR name"""
+    """Display premium banner with AMMAR name"""
     clear_screen()
     
-    # ASCII Art Banner with AMMAR name
     banner = f"""
 {C.NEON_RED}    ╔══════════════════════════════════════════════════════════╗
 {C.NEON_RED}    ║{C.NEON_YELLOW}  █████╗ ███╗   ███╗███╗   ███╗ █████╗ ██████╗ {C.NEON_RED}║
@@ -128,48 +87,26 @@ def show_banner():
 {C.NEON_RED}    ║{C.NEON_YELLOW} ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝{C.NEON_RED}║
 {C.NEON_RED}    ╚══════════════════════════════════════════════════════════╝{C.RESET}
     
-{C.NEON_BLUE}    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-{C.NEON_BLUE}    ┃{C.NEON_GREEN}            SIM DATABASE PREMIUM EDITION v2.0           {C.NEON_BLUE}┃
-{C.NEON_BLUE}    ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-{C.NEON_BLUE}    ┃{C.WHITE}     ╔═══════════════════════════════════════════╗     {C.NEON_BLUE}┃
-{C.NEON_BLUE}    ┃{C.WHITE}     ║{C.NEON_PINK}    ░▒▓█ OWNER: {C.NEON_YELLOW}AMMAR {C.NEON_PINK}█▓▒░      {C.WHITE}║     {C.NEON_BLUE}┃
-{C.NEON_BLUE}    ┃{C.WHITE}     ╚═══════════════════════════════════════════╝     {C.NEON_BLUE}┃
-{C.NEON_BLUE}    ┃                                                          ┃
-{C.NEON_BLUE}    ┃  {C.NEON_CYAN}▸ WHATSAPP:{C.WHITE} 03018787786       {C.NEON_CYAN}▸ MODE:{C.NEON_YELLOW} PREMIUM {C.NEON_BLUE}┃
-{C.NEON_BLUE}    ┃  {C.NEON_CYAN}▸ GROUP:{C.WHITE} AMMAR PRIVATE      {C.NEON_CYAN}▸ API:{C.NEON_GREEN} ONLINE  {C.NEON_BLUE}┃
-{C.NEON_BLUE}    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛{C.RESET}
+{C.NEON_BLUE}    ╔══════════════════════════════════════════════════════════╗
+{C.NEON_BLUE}    ║{C.NEON_GREEN}         SIM DATABASE PREMIUM EDITION v2.0            {C.NEON_BLUE}║
+{C.NEON_BLUE}    ╠══════════════════════════════════════════════════════════╣
+{C.NEON_BLUE}    ║{C.WHITE}                                                    {C.NEON_BLUE}║
+{C.NEON_BLUE}    ║{C.NEON_PINK}      👤 OWNER    : {C.NEON_YELLOW}AMMAR                     {C.NEON_BLUE}║
+{C.NEON_BLUE}    ║{C.NEON_PINK}      📞 WHATSAPP : {C.NEON_YELLOW}03018787786               {C.NEON_BLUE}║
+{C.NEON_BLUE}    ║{C.NEON_PINK}      📱 GROUP    : {C.NEON_YELLOW}AMMAR PRIVATE              {C.NEON_BLUE}║
+{C.NEON_BLUE}    ║{C.NEON_PINK}      ⚡ MODE     : {C.NEON_GREEN}PREMIUM                    {C.NEON_BLUE}║
+{C.NEON_BLUE}    ║{C.NEON_PINK}      🌐 API      : {C.NEON_GREEN}ONLINE                     {C.NEON_BLUE}║
+{C.NEON_BLUE}    ║{C.WHITE}                                                    {C.NEON_BLUE}║
+{C.NEON_BLUE}    ╚══════════════════════════════════════════════════════════╝{C.RESET}
     """
     print(banner)
 
 # ============================================
-# MAIN FUNCTIONS
+# DATA EXTRACTION FUNCTIONS
 # ============================================
-def extract_address(data):
-    """Extract valid address from nested data"""
-    if isinstance(data, dict):
-        for key, value in data.items():
-            key_lower = str(key).lower()
-            
-            if 'address' in key_lower:
-                if value and 'no' not in str(value).lower() and 'null' not in str(value).lower():
-                    return str(value)
-            
-            if isinstance(value, (dict, list)):
-                result = extract_address(value)
-                if result:
-                    return result
-    
-    elif isinstance(data, list):
-        for item in data:
-            result = extract_address(item)
-            if result:
-                return result
-    
-    return None
-
-def display_results(data, indent=0):
-    """Display search results in beautiful format"""
-    address_found = None
+def extract_all_data(data, indent=0):
+    """Extract and display all data in beautiful format"""
+    results = []
     
     if isinstance(data, dict):
         for key, value in data.items():
@@ -179,46 +116,112 @@ def display_results(data, indent=0):
             if any(x in key_lower for x in ["howler", "developer", "status", "count", "query", "success"]):
                 continue
             
-            # Check for address
-            if 'address' in key_lower and value:
-                if 'no' not in str(value).lower() and 'null' not in str(value).lower():
-                    address_found = str(value)
-            
-            # Display with proper formatting
-            prefix = "  " * indent
             if isinstance(value, (dict, list)):
-                print(f"{C.NEON_BLUE}  {prefix}{C.NEON_YELLOW}► {C.NEON_GREEN}{key.upper()}{C.RESET}")
-                sub_address = display_results(value, indent + 1)
-                if sub_address and not address_found:
-                    address_found = sub_address
+                sub_results = extract_all_data(value, indent + 1)
+                if sub_results:
+                    results.extend(sub_results)
             else:
-                display_value = str(value)[:60] + ('...' if len(str(value)) > 60 else '')
-                print(f"{C.NEON_BLUE}  {prefix}{C.NEON_CYAN}  ├─ {C.WHITE}{key:<15}{C.NEON_PINK}: {C.NEON_YELLOW}{display_value}{C.RESET}")
+                if value and str(value).strip() and str(value).lower() not in ["no", "null", "none", ""]:
+                    results.append({
+                        'key': key,
+                        'value': str(value),
+                        'indent': indent
+                    })
     
     elif isinstance(data, list):
-        for i, item in enumerate(data):
-            if isinstance(item, dict):
-                print(f"{C.NEON_BLUE}  {'  ' * indent}{C.NEON_MAGENTA}► [{i+1}]{C.RESET}")
-                sub_address = display_results(item, indent + 1)
-                if sub_address and not address_found:
-                    address_found = sub_address
+        for item in data:
+            if isinstance(item, (dict, list)):
+                sub_results = extract_all_data(item, indent + 1)
+                if sub_results:
+                    results.extend(sub_results)
+            else:
+                if item and str(item).strip() and str(item).lower() not in ["no", "null", "none", ""]:
+                    results.append({
+                        'key': 'VALUE',
+                        'value': str(item),
+                        'indent': indent
+                    })
     
-    return address_found
+    return results
 
+def find_address(data):
+    """Find address in data"""
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if 'address' in str(key).lower():
+                if value and 'no' not in str(value).lower() and 'null' not in str(value).lower():
+                    return str(value)
+            if isinstance(value, (dict, list)):
+                result = find_address(value)
+                if result:
+                    return result
+    elif isinstance(data, list):
+        for item in data:
+            result = find_address(item)
+            if result:
+                return result
+    return None
+
+def display_results_table(results):
+    """Display results in a beautiful table format"""
+    if not results:
+        print(f"\n{C.NEON_RED}  ╔══════════════════════════════════════════════════╗")
+        print(f"  ║{C.WHITE}           ❌ NO DATA FOUND!                {C.NEON_RED}║")
+        print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
+        return
+    
+    print(f"\n{C.NEON_GREEN}  ╔══════════════════════════════════════════════════╗")
+    print(f"  ║{C.NEON_YELLOW}           📊 DATABASE RECORDS FOUND          {C.NEON_GREEN}║")
+    print(f"  ╠══════════════════════════════════════════════════╣{C.RESET}")
+    
+    for item in results:
+        indent = "  " * item['indent']
+        key = item['key'].upper()
+        value = item['value']
+        
+        # Truncate long values
+        if len(value) > 50:
+            value = value[:47] + "..."
+        
+        # Color coding based on key type
+        if 'name' in key.lower():
+            key_color = C.NEON_PINK
+        elif 'phone' in key.lower() or 'mobile' in key.lower():
+            key_color = C.NEON_CYAN
+        elif 'address' in key.lower():
+            key_color = C.NEON_YELLOW
+        elif 'email' in key.lower():
+            key_color = C.NEON_BLUE
+        elif 'cnic' in key.lower() or 'id' in key.lower():
+            key_color = C.NEON_GREEN
+        else:
+            key_color = C.WHITE
+        
+        print(f"{C.NEON_BLUE}  ║{C.RESET} {indent}{key_color}▸ {key:<12}{C.NEON_PINK}: {C.WHITE}{value}")
+    
+    print(f"{C.NEON_GREEN}  ╚══════════════════════════════════════════════════╝{C.RESET}")
+
+# ============================================
+# MAP FUNCTION
+# ============================================
 def open_map(address):
     """Open address in Google Maps"""
-    if address and len(address) > 5 and all(x not in address.lower() for x in ['no', 'null', 'none']):
+    if address and len(address) > 5:
         clean_addr = address.replace('null', '').replace('no', '').replace('none', '').strip()
-        search_url = f"https://www.google.com/maps/search/{clean_addr.replace(' ', '+')}"
-        
-        print(f"\n{C.NEON_GREEN}  ╔══════════════════════════════════════════════════╗")
-        print(f"  ║{C.NEON_YELLOW}     📍 LOCATION FOUND! OPENING MAPS...        {C.NEON_GREEN}║")
-        print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
-        
-        os.system(f"termux-open-url '{search_url}'")
-        return True
+        if clean_addr and len(clean_addr) > 3:
+            search_url = f"https://www.google.com/maps/search/{clean_addr.replace(' ', '+')}"
+            
+            print(f"\n{C.NEON_GREEN}  ╔══════════════════════════════════════════════════╗")
+            print(f"  ║{C.NEON_YELLOW}     📍 LOCATION FOUND! OPENING MAPS...        {C.NEON_GREEN}║")
+            print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
+            
+            os.system(f"termux-open-url '{search_url}'")
+            return True
     return False
 
+# ============================================
+# SEARCH FUNCTION
+# ============================================
 def search_database(phone):
     """Search phone number in database"""
     show_banner()
@@ -226,17 +229,18 @@ def search_database(phone):
     print(f"\n{C.NEON_CYAN}  ╔══════════════════════════════════════════════════╗")
     print(f"  ║{C.WHITE}           INITIALIZING DATABASE SCAN            {C.NEON_CYAN}║")
     print(f"  ╠══════════════════════════════════════════════════╣")
-    print(f"  ║{C.NEON_GREEN}  📱 TARGET:{C.WHITE} {phone:<35}{C.NEON_CYAN}║")
-    print(f"  ║{C.NEON_GREEN}  🔐 SECURITY:{C.WHITE} BYPASSING FIREWALL...     {C.NEON_CYAN}║")
+    print(f"  ║{C.NEON_GREEN}  📱 NUMBER : {C.WHITE}{phone}{C.NEON_CYAN}")
+    print(f"  ║{C.NEON_GREEN}  🔐 STATUS : {C.NEON_YELLOW}BYPASSING FIREWALL...{C.NEON_CYAN}")
     print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
     
     # Format phone number
+    original_phone = phone
     if phone.startswith('0'):
         phone = '+92' + phone[1:]
     elif not phone.startswith('+'):
         phone = '+92' + phone
     
-    loading_animation("CONNECTING TO DATABASE", 1.5)
+    loading_animation("CONNECTING TO DATABASE")
     
     try:
         url = f"{CONFIG['api_base']}{phone}"
@@ -245,7 +249,7 @@ def search_database(phone):
         if response.status_code != 200:
             print(f"\n{C.NEON_RED}  ╔══════════════════════════════════════════════════╗")
             print(f"  ║{C.WHITE}          ❌ DATABASE CONNECTION FAILED         {C.NEON_RED}║")
-            print(f"  ║{C.NEON_YELLOW}      STATUS: {response.status_code}                     {C.NEON_RED}║")
+            print(f"  ║{C.NEON_YELLOW}      STATUS CODE: {response.status_code}{C.NEON_RED}")
             print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
             input(f"\n{C.NEON_YELLOW}  Press ENTER to continue...{C.RESET}")
             return
@@ -255,39 +259,37 @@ def search_database(phone):
         print(f"\n{C.NEON_GREEN}  ╔══════════════════════════════════════════════════╗")
         print(f"  ║{C.WHITE}            ✅ DATABASE ACCESS GRANTED            {C.NEON_GREEN}║")
         print(f"  ╠══════════════════════════════════════════════════╣")
-        print(f"  ║{C.NEON_CYAN}  📊 FETCHING RESULTS...                        {C.NEON_GREEN}║")
+        print(f"  ║{C.NEON_CYAN}  📊 FETCHING RECORDS...{C.NEON_GREEN}")
         print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}\n")
         
         time.sleep(1)
         
-        # Display results header
-        print(f"{C.NEON_BLUE}  ╔══════════════════════════════════════════════════╗")
-        print(f"  ║{C.NEON_PINK}            🔍 SEARCH RESULTS FOUND            {C.NEON_BLUE}║")
-        print(f"  ╠══════════════════════════════════════════════════╣{C.RESET}")
-        
         if data and data != {}:
-            address = display_results(data)
+            # Extract all data
+            results = extract_all_data(data)
+            display_results_table(results)
             
-            print(f"{C.NEON_BLUE}  ╚══════════════════════════════════════════════════╝{C.RESET}")
+            # Find address for maps
+            address = find_address(data)
             
-            # Handle address for maps
             if address:
                 print(f"\n{C.NEON_GREEN}  ╔══════════════════════════════════════════════════╗")
-                print(f"  ║{C.WHITE}              📍 ADDRESS DETECTED                {C.NEON_GREEN}║")
+                print(f"  ║{C.NEON_YELLOW}              📍 ADDRESS DETECTED                {C.NEON_GREEN}║")
                 print(f"  ╠══════════════════════════════════════════════════╣")
-                print(f"  ║{C.NEON_YELLOW}  {address[:70]}{'...' if len(address) > 70 else ''}{C.NEON_GREEN}║")
+                print(f"  ║{C.WHITE}  {address[:70]}{'...' if len(address) > 70 else ''}{C.NEON_GREEN}║")
                 print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
                 
-                choice = input(f"\n{C.NEON_CYAN}  📍 OPEN IN GOOGLE MAPS? (y/n): {C.WHITE}").lower()
+                while True:
+                    choice = input(f"\n{C.NEON_CYAN}  📍 OPEN IN GOOGLE MAPS? (y/n): {C.WHITE}").lower()
+                    if choice in ['y', 'n', 'yes', 'no']:
+                        break
+                    print(f"{C.NEON_RED}  ❌ Please enter 'y' or 'n'{C.RESET}")
+                
                 if choice in ['y', 'yes']:
                     open_map(address)
-            else:
-                print(f"\n{C.NEON_RED}  ╔══════════════════════════════════════════════════╗")
-                print(f"  ║{C.WHITE}         ⚠️ NO VALID ADDRESS FOUND             {C.NEON_RED}║")
-                print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
-        
         else:
-            print(f"{C.NEON_BLUE}  ║{C.NEON_RED}            ❌ NO RECORDS FOUND!              {C.NEON_BLUE}║")
+            print(f"\n{C.NEON_RED}  ╔══════════════════════════════════════════════════╗")
+            print(f"  ║{C.WHITE}            ❌ NO RECORDS FOUND!                {C.NEON_RED}║")
             print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
         
     except requests.exceptions.Timeout:
@@ -299,21 +301,24 @@ def search_database(phone):
     
     input(f"\n{C.NEON_YELLOW}  Press ENTER to return to main menu...{C.RESET}")
 
+# ============================================
+# ABOUT SECTION
+# ============================================
 def show_about():
-    """Display about section with group links"""
+    """Display about section"""
     show_banner()
     
     print(f"\n{C.NEON_CYAN}  ╔══════════════════════════════════════════════════╗")
     print(f"  ║{C.NEON_PINK}            📱 CONTACT & SUPPORT INFO          {C.NEON_CYAN}║")
     print(f"  ╠══════════════════════════════════════════════════╣")
     print(f"  ║{C.WHITE}                                            {C.NEON_CYAN}║")
-    print(f"  ║{C.NEON_GREEN}  👤 OWNER:{C.WHITE} AMMAR                       {C.NEON_CYAN}║")
-    print(f"  ║{C.NEON_GREEN}  📞 WHATSAPP:{C.WHITE} 03018787786              {C.NEON_CYAN}║")
+    print(f"  ║{C.NEON_GREEN}  👤 OWNER     : {C.WHITE}AMMAR                {C.NEON_CYAN}║")
+    print(f"  ║{C.NEON_GREEN}  📞 WHATSAPP  : {C.WHITE}03018787786         {C.NEON_CYAN}║")
     print(f"  ║{C.WHITE}                                            {C.NEON_CYAN}║")
-    print(f"  ║{C.NEON_YELLOW}  👥 AMMAR PRIVATE GROUP:{C.WHITE}                {C.NEON_CYAN}║")
-    print(f"  ║{C.NEON_CYAN}  {CONFIG['group_link'][:65]}{C.NEON_CYAN}║")
+    print(f"  ║{C.NEON_YELLOW}  👥 GROUP LINK:{C.WHITE}                   {C.NEON_CYAN}║")
+    print(f"  ║{C.NEON_CYAN}  {CONFIG['group_link']}{C.NEON_CYAN}║")
     print(f"  ║{C.WHITE}                                            {C.NEON_CYAN}║")
-    print(f"  ║{C.NEON_MAGENTA}  ⭐ VERSION: {CONFIG['version']}                     {C.NEON_CYAN}║")
+    print(f"  ║{C.NEON_MAGENTA}  ⭐ VERSION   : {CONFIG['version']}           {C.NEON_CYAN}║")
     print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
     
     print(f"\n{C.NEON_YELLOW}  🚀 Open group link in browser?{C.RESET}")
@@ -334,30 +339,30 @@ def main():
             print(f"\n{C.NEON_BLUE}  ╔══════════════════════════════════════════════════╗")
             print(f"  ║{C.NEON_GREEN}              🔥 MAIN MENU OPTIONS 🔥            {C.NEON_BLUE}║")
             print(f"  ╠══════════════════════════════════════════════════╣")
-            print(f"  ║{C.WHITE}                                                {C.NEON_BLUE}║")
-            print(f"  ║  {C.NEON_YELLOW}[01]{C.NEON_CYAN} 🔍 SEARCH DATABASE          {C.NEON_MAGENTA}[MAPS]{C.WHITE}     {C.NEON_BLUE}║")
-            print(f"  ║  {C.NEON_YELLOW}[02]{C.NEON_CYAN} 📱 CONTACT & SUPPORT        {C.NEON_MAGENTA}[GROUP]{C.WHITE}   {C.NEON_BLUE}║")
-            print(f"  ║  {C.NEON_YELLOW}[00]{C.NEON_RED} ❌ EXIT SYSTEM               {C.NEON_MAGENTA}[QUIT]{C.WHITE}   {C.NEON_BLUE}║")
-            print(f"  ║{C.WHITE}                                                {C.NEON_BLUE}║")
+            print(f"  ║{C.WHITE}                                            {C.NEON_BLUE}║")
+            print(f"  ║  {C.NEON_YELLOW}[01]{C.NEON_CYAN} 🔍 SEARCH DATABASE          {C.NEON_PINK}[MAPS]{C.WHITE}     {C.NEON_BLUE}║")
+            print(f"  ║  {C.NEON_YELLOW}[02]{C.NEON_CYAN} 📱 CONTACT & SUPPORT        {C.NEON_PINK}[GROUP]{C.WHITE}   {C.NEON_BLUE}║")
+            print(f"  ║  {C.NEON_YELLOW}[00]{C.NEON_RED} ❌ EXIT SYSTEM               {C.NEON_PINK}[QUIT]{C.WHITE}   {C.NEON_BLUE}║")
+            print(f"  ║{C.WHITE}                                            {C.NEON_BLUE}║")
             print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
             
             print(f"\n{C.NEON_CYAN}  ╭{'─' * 50}╮")
             choice = input(f"  {C.NEON_GREEN}⚡ AMMAR@{C.NEON_YELLOW}TERMUX{C.NEON_BLUE} ~${C.WHITE} ").strip()
             print(f"  {C.NEON_CYAN}╰{'─' * 50}╯{C.RESET}")
             
-            if choice == '01' or choice == '1':
+            if choice in ['01', '1']:
                 print(f"\n{C.NEON_YELLOW}  📞 Enter Pakistani number (e.g., 03018787786):{C.WHITE}")
                 phone = input(f"  {C.NEON_CYAN}⤷ {C.WHITE}").strip()
-                if phone and phone.replace('+', '').replace('-', '').isdigit():
+                if phone and phone.replace('+', '').replace('-', '').replace(' ', '').isdigit():
                     search_database(phone)
                 else:
                     print(f"\n{C.NEON_RED}  ❌ Invalid number format!{C.RESET}")
                     time.sleep(2)
             
-            elif choice == '02' or choice == '2':
+            elif choice in ['02', '2']:
                 show_about()
             
-            elif choice == '00' or choice == '0':
+            elif choice in ['00', '0']:
                 print(f"\n{C.NEON_RED}  ╔══════════════════════════════════════════════════╗")
                 print(f"  ║{C.WHITE}         👋 THANK YOU FOR USING AMMAR SIM        {C.NEON_RED}║")
                 print(f"  ║{C.NEON_YELLOW}            🔥 AMMAR PREMIUM EDITION 🔥         {C.NEON_RED}║")
@@ -380,7 +385,6 @@ def main():
 # PROGRAM START
 # ============================================
 if __name__ == "__main__":
-    # Check if running in Termux
     try:
         main()
     except Exception as e:
