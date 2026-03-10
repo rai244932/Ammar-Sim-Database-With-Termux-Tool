@@ -1,109 +1,149 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-import time
-import requests
+import os, sys, time, json, requests
+from datetime import datetime
 
 # ============================================
-# PREMIUM COLOR CODES (TERMUX OPTIMIZED)
+# NEON MATRIX COLOR ENGINE
 # ============================================
-class C:
-    RED = '\033[1;31m'
-    GREEN = '\033[1;32m'
-    YELLOW = '\033[1;33m'
-    BLUE = '\033[1;34m'
-    MAGENTA = '\033[1;35m'
-    CYAN = '\033[1;36m'
-    WHITE = '\033[1;37m'
-    RESET = '\033[0m'
+class Color:
+    G = '\033[92m' # Green
+    Y = '\033[93m' # Yellow
+    R = '\033[91m' # Red
+    C = '\033[96m' # Cyan
+    M = '\033[95m' # Magenta
+    W = '\033[97m' # White
+    B = '\033[1m'  # Bold
+    S = '\033[0m'  # Reset
 
 # ============================================
-# UTILITIES
+# ADVANCED UTILITIES
 # ============================================
 def clear():
-    os.system('clear')
+    os.system('clear' if os.name == 'posix' else 'cls')
 
-def banner():
+def typing_effect(text, speed=0.03):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(speed)
+    print()
+
+def loading_animation(duration=2):
+    chars = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
+    end_time = time.time() + duration
+    while time.time() < end_time:
+        for char in chars:
+            sys.stdout.write(f"\r  {Color.C}[{char}] {Color.W}SYSTEM ACCESSING DATABASE...{Color.S}")
+            sys.stdout.flush()
+            time.sleep(0.1)
+    print("\r" + " " * 50 + "\r", end="")
+
+# ============================================
+# STYLISH INTERFACE FUNCTIONS
+# ============================================
+def show_banner():
     clear()
-    print(f"{C.CYAN}")
-    print(r"      █████╗ ███╗   ███╗███╗   ███╗ █████╗ ██████╗ ")
-    print(r"     ██╔══██╗████╗ ████║████╗ ████║██╔══██╗██╔══██╗")
-    print(r"     ███████║██╔████╔██║██╔████╔██║███████║██████╔╝")
-    print(r"     ██╔══██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██╔══██╗")
-    print(r"     ██║  ██║██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║  ██║")
-    print(f"{C.RESET}")
-    print(f"  {C.WHITE}╔══════════════════════════════════════════════╗")
-    print(f"  ║ {C.GREEN}DEVELOPER {C.WHITE}: {C.YELLOW}AMMAR RAI{C.WHITE}                       ║")
-    print(f"  ║ {C.GREEN}WHATSAPP  {C.WHITE}: {C.YELLOW}923018787786{C.WHITE}                    ║")
-    print(f"  ║ {C.GREEN}TOOL MODE {C.WHITE}: {C.CYAN}PREMIUM V3 (TERMUX){C.WHITE}             ║")
-    print(f"  ╚══════════════════════════════════════════════╝{C.RESET}\n")
+    banner = f"""{Color.G}
+    {Color.C}   ▄████████   ▄▄▄▄███▄▄▄  ▄▄▄▄███▄▄▄    ▄████████    ▄████████ 
+    {Color.C}  ███    ███ ▄██▀▀▀███▀▀▀███▀▀▀███▀▀▀███  ███    ███   ███    ███ 
+    {Color.G}  ███    ███ ███   ███   ███   ███   ███  ███    ███   ███    ███ 
+    {Color.G}  ███    ███ ███   ███   ███   ███   ███  ███    ███  ▄███▄▄▄▄██▀ 
+    {Color.Y}▀███████████ ███   ███   ███   ███   ███▀███████████ ▀▀███▀▀▀▀▀   
+    {Color.Y}  ███    ███ ███   ███   ███   ███   ███  ███    ███ ▀███████████ 
+    {Color.R}  ███    ███ ███   ███   ███   ███   ███  ███    ███   ███    ███ 
+    {Color.R}  ███    █▀   ▀█   ███   █▀    ███   █▀   ███    █▀    ███    ███ 
+    {Color.S}"""
+    print(banner)
+    print(f"  {Color.B}{Color.W}┌──────────────────────────────────────────────────────────┐")
+    print(f"  {Color.W}│ {Color.G}OWNER    {Color.W}: {Color.Y}AMMAR RAI{Color.W}          {Color.G}BRAND {Color.W}: {Color.M}AMMAR-RAI TECH™{Color.W} │")
+    print(f"  {Color.W}│ {Color.G}CONTACT  {Color.W}: {Color.Y}923018787786{Color.W}       {Color.G}MODE  {Color.W}: {Color.C}ULTRA-PREMIUM{Color.W}   │")
+    print(f"  {Color.B}{Color.W}└──────────────────────────────────────────────────────────┘{Color.S}")
 
-def menu():
-    print(f"  {C.CYAN}┌──────────────────────────────────────────┐{C.RESET}")
-    print(f"  {C.CYAN}│ {C.YELLOW}[01]{C.WHITE} SEARCH DATABASE     {C.CYAN}│ {C.YELLOW}[02]{C.WHITE} SUPPORT    {C.CYAN}│{C.RESET}")
-    print(f"  {C.CYAN}├──────────────────────────────────────────┤{C.RESET}")
-    print(f"  {C.CYAN}│ {C.YELLOW}[03]{C.WHITE} JOIN GROUP         {C.CYAN}│ {C.YELLOW}[00]{C.RED} EXIT       {C.CYAN}│{C.RESET}")
-    print(f"  {C.CYAN}└──────────────────────────────────────────┘{C.RESET}\n")
+def show_menu():
+    print(f"\n  {Color.C}╔═══════════════════════ PRIMARY SYSTEM ══════════════════════╗")
+    print(f"  {Color.W}║  {Color.Y}[01] {Color.W}SIM SCANNER       {Color.W}║  {Color.Y}[02] {Color.W}SAVE HISTORY      {Color.W}║")
+    print(f"  {Color.W}║  {Color.Y}[03] {Color.W}CONTACT OWNER     {Color.W}║  {Color.Y}[04] {Color.W}JOIN PRIVATE      {Color.W}║")
+    print(f"  {Color.W}║  {Color.Y}[00] {Color.R}TERMINATE SYSTEM  {Color.W}║  {Color.Y}[99] {Color.G}CHECK UPDATE      {Color.W}║")
+    print(f"  {Color.C}╚═════════════════════════════════════════════════════════════╝")
 
-def search(phone):
-    banner()
-    print(f"  {C.GREEN}[~] {C.WHITE}SCANNING: {C.YELLOW}{phone}{C.RESET}")
-    print(f"  {C.GREEN}[~] {C.WHITE}DATABASE: {C.CYAN}CONNECTING...{C.RESET}\n")
-    time.sleep(1.5)
+def save_to_history(phone, data):
+    with open("search_history.txt", "a") as f:
+        f.write(f"Date: {datetime.now()} | Phone: {phone} | Data: {data}\n")
+
+# ============================================
+# CORE LOGIC
+# ============================================
+def search_engine(phone):
+    show_banner()
+    print(f"  {Color.G}[+] {Color.W}INITIALIZING TARGET: {Color.Y}{phone}")
+    loading_animation(2)
     
-    # Formatting
-    if phone.startswith('0'): phone = '+92' + phone[1:]
-    elif not phone.startswith('+'): phone = '+92' + phone
+    # URL Format
+    if phone.startswith('0'): phone = '92' + phone[1:]
     
     try:
-        url = f"https://howler-database-api.vercel.app/api/lookup?phone={phone}"
-        res = requests.get(url, timeout=15)
-        if res.status_code == 200:
-            data = res.json()
-            print(f"  {C.MAGENTA}⚡ RECORD FOUND ⚡{C.RESET}")
-            print(f"  {C.WHITE}──────────────────────────────────────────{C.RESET}")
+        api_url = f"https://howler-database-api.vercel.app/api/lookup?phone={phone}"
+        response = requests.get(api_url, timeout=20)
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"  {Color.M}◢◤ DATA RECOVERED SUCCESSFULLY ◢◤{Color.S}\n")
             
-            # Extract and Display
+            # Professional Table Design
+            print(f"  {Color.C}╭───────────────────────────────────────────────────╮")
             found = False
             for k, v in data.items():
-                if any(x in str(k).lower() for x in ["status", "success", "developer"]): continue
-                if v and str(v).lower() not in ["null", "none"]:
-                    print(f"  {C.CYAN}➤ {C.GREEN}{k.upper():<10} {C.WHITE}│ {C.WHITE}{v}{C.RESET}")
+                if any(x in str(k).lower() for x in ["status", "success", "count"]): continue
+                if v and str(v).lower() not in ["null", "none", "no"]:
+                    print(f"  {Color.C}│ {Color.G}{k.upper():<12} {Color.W}➤  {Color.W}{v}")
                     found = True
             
             if not found:
-                print(f"  {C.RED}NO DATA AVAILABLE IN THIS SECTOR.{C.RESET}")
+                print(f"  {Color.C}│ {Color.R}MESSAGE: {Color.W}NO ENCRYPTED RECORDS FOUND.         ")
             
-            print(f"  {C.WHITE}──────────────────────────────────────────{C.RESET}")
+            print(f"  {Color.C}╰───────────────────────────────────────────────────╯")
+            
+            if found:
+                save_to_history(phone, data)
+                print(f"  {Color.G}[✔] {Color.W}RECORD AUTO-SAVED IN {Color.Y}search_history.txt")
         else:
-            print(f"  {C.RED}❌ SERVER ERROR!{C.RESET}")
-    except:
-        print(f"  {C.RED}❌ CONNECTION ERROR!{C.RESET}")
+            print(f"  {Color.R}[!] SERVER REJECTED CONNECTION (Error {response.status_code})")
+            
+    except Exception as e:
+        print(f"  {Color.R}[!] FATAL ERROR: {str(e)}")
     
-    input(f"\n  {C.YELLOW}Press Enter to go back...{C.RESET}")
+    input(f"\n  {Color.Y}Press [ENTER] to return to Mainframe...{Color.S}")
 
 def main():
-    while True:
-        banner()
-        menu()
-        cmd = input(f"  {C.GREEN}AMMAR-RAI{C.WHITE}@{C.YELLOW}TERMUX{C.CYAN} ~# {C.WHITE}").strip()
-        
-        if cmd in ['1', '01']:
-            num = input(f"  {C.YELLOW}📞 Enter Number: {C.WHITE}").strip()
-            if num: search(num)
-        elif cmd in ['2', '02']:
-            print(f"  {C.GREEN}Contact: {C.WHITE}923018787786")
-            time.sleep(2)
-        elif cmd in ['3', '03']:
-            os.system("termux-open-url 'https://chat.whatsapp.com/F2zlsDXzwp05KKIrqj8vVj'")
-        elif cmd in ['0', '00']:
-            print(f"  {C.RED}System Exited.{C.RESET}")
-            break
-        else:
-            print(f"  {C.RED}Invalid Option!{C.RESET}")
-            time.sleep(1)
+    try:
+        while True:
+            show_banner()
+            show_menu()
+            choice = input(f"  {Color.G}RAI-AMMAR{Color.W}@{Color.C}DATABASE{Color.W}:~# {Color.Y}").strip()
+            
+            if choice == '01' or choice == '1':
+                num = input(f"  {Color.C}[?] {Color.W}Enter Target Phone (e.g 03xxxxxxxxx): {Color.G}").strip()
+                if num: search_engine(num)
+            elif choice == '02' or choice == '2':
+                os.system('cat search_history.txt' if os.name == 'posix' else 'type search_history.txt')
+                input("\n  Press Enter to continue...")
+            elif choice == '03' or choice == '3':
+                typing_effect(f"  {Color.G}Contacting Ammar Rai on WhatsApp...")
+                time.sleep(1)
+                os.system("termux-open-url 'https://wa.me/923018787786'")
+            elif choice == '04' or choice == '4':
+                os.system("termux-open-url 'https://chat.whatsapp.com/F2zlsDXzwp05KKIrqj8vVj'")
+            elif choice == '00' or choice == '0':
+                typing_effect(f"  {Color.R}System Shutdown Initiated...")
+                break
+            else:
+                print(f"  {Color.R}[!] Invalid Command Selection!")
+                time.sleep(1)
+    except KeyboardInterrupt:
+        print(f"\n  {Color.R}[!] Operation Interrupted by User.")
+        sys.exit()
 
 if __name__ == "__main__":
     main()
